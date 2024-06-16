@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class University(models.Model):
     name = models.CharField(max_length=255)
+    location = models.CharField(max_length=300, null=True, blank=True, default='UNKNOWN')
 
 class Course(models.Model):
     course_ID = models.AutoField(primary_key=True)
