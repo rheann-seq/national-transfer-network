@@ -9,4 +9,7 @@ class UniversitySerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = '__all__'        
+        fields = '__all__'       
+
+class ExcelFileSerializer(serializers.Serializer):
+    file = serializers.FileField()         

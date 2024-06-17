@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from .views import UniversityViewSet, CourseViewSet
+from .views import ExcelUploadView, UniversityViewSet, CourseViewSet
 from django.urls import path, include
 
 
@@ -8,5 +8,6 @@ router.register(r'universities', UniversityViewSet)
 router.register(r'courses', CourseViewSet)
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('upload_excel/', ExcelUploadView.as_view(), name='upload_excel'),
 ]
