@@ -19,5 +19,6 @@
    python3 -m pip install --upgrade pip
    • Then install Django
    python3 -m pip install django
-5. python3 manage.py migrate
+5. python3 -m pip install djangorestframework
+6. python3 manage.py migrate
    python3 manage.py runserver
