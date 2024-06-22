@@ -17,7 +17,11 @@ class CourseViewSet(viewsets.ModelViewSet):
     print(str(queryset.query))
     serializer_class = CourseSerializer    
 
+def ViewDataUpload(request):
+    return render(request,'updated.html')
+
 class ExcelUploadView(APIView):
+    print('called the excel upload function')
     parser_classes = (MultiPartParser, FormParser,)
 
     def post(self, request, *args, **kwargs):
