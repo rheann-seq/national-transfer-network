@@ -18,7 +18,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer    
 
 def ViewDataUpload(request):
-    return render(request,'updated.html')
+    return render(request,'ntn_app/updated.html')
 
 class ExcelUploadView(APIView):
     print('called the excel upload function')

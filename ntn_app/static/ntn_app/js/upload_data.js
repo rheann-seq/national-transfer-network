@@ -17,7 +17,7 @@ $(document).ready(function () {
 	}
 	const csrftoken = getCookie("csrftoken");
 
-	$("#uploadForm").on("submit", function (e) {
+	$("#uploadForm").on("click", function (e) {
 		e.preventDefault();
 
 		var formData = new FormData();

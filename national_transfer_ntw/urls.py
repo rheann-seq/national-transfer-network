@@ -20,6 +20,6 @@ from ntn_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('ntn_app.urls')),
+    path('', include('ntn_app.urls')),
     
 ]

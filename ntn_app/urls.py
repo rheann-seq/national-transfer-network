@@ -10,7 +10,7 @@ router.register(r'universities', UniversityViewSet)
 router.register(r'courses', CourseViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('upload_excel/', ExcelUploadView.as_view(), name='upload_excel'),
+    path('api/', include(router.urls)),
+    path('api/upload_excel/', ExcelUploadView.as_view(), name='upload_excel'),
     path('upload_data/', views.ViewDataUpload, name='upload')
 ]

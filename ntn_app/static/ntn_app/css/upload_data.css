@@ -1,0 +1,56 @@
+body {
+	background: linear-gradient(135deg, #3b5998, #8b9dc3); /* Blue gradient for trust and professionalism */
+	color: #ffffff;
+	font-family: "Arial", sans-serif;
+}
+.container {
+	background-color: rgba(255, 255, 255, 0.1);
+	padding: 30px;
+	border-radius: 15px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	margin-top: 50px;
+}
+h2 {
+	color: #ffffff;
+	border-bottom: 3px solid #ffcc00; /* Yellow for attention */
+	display: inline-block;
+	padding-bottom: 5px;
+	margin-bottom: 20px;
+}
+.form-group label {
+	color: #ffffff;
+	font-weight: bold;
+}
+.btn-primary {
+	background-color: #ffcc00; /* Yellow for call to action */
+	border-color: #ffcc00;
+	transition: background-color 0.3s ease;
+	color: #000;
+}
+.btn-primary:hover {
+	background-color: #ffa500; /* Orange for a stronger call to action */
+	border-color: #ffa500;
+	color: #fff;
+}
+.btn-secondary {
+	background-color: #6c757d;
+	border-color: #6c757d;
+	transition: background-color 0.3s ease;
+}
+.btn-secondary:hover {
+	background-color: #5a6268;
+	border-color: #545b62;
+}
+.img-fluid {
+	border: 1px solid #dee2e6;
+	padding: 5px;
+	border-radius: 8px;
+	margin-top: 10px;
+	width: 100%;
+	height: auto;
+}
+.form-control,
+.form-control-file {
+	background-color: rgba(255, 255, 255, 0.8);
+	color: #000;
+}
