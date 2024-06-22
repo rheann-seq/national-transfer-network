@@ -29,20 +29,34 @@ class ExcelUploadView(APIView):
             for index, row in df.iterrows():
                 four_year_university, _ = University.objects.get_or_create(
                     name=row['4yearCollegeName'],
-                    location=row['4yearCollegeLocation']
+                    location=row['4yearCollegeLocation'],
+                    defaults={'university_type': 'FOUR_YEAR'}
                 )
                 two_year_university, _ = University.objects.get_or_create(
                     name=row['2yearCollegeName'],
-                    location=row['2yearCollegeLocation']
+                    location=row['2yearCollegeLocation'],
+                    defaults={'university_type': 'TWO_YEAR'}
                 )
-                Course.objects.create(
+                #2 year course
+                two_year_course = Course.objects.create(
                     course_name=row['CC_Subject'],
                     effective_term=row['EffectiveTerm'],
                     credits=row['Credits'],
-                    four_year_university=four_year_university,
-                    two_year_university = two_year_university
+                    university=four_year_university,
                 )
 
+                #4year course
+                four_year_course = Course.objects.create(
+                    course_name=row['CC_Subject'],
+                    effective_term=row['EffectiveTerm'],
+                    credits=row['Credits'],
+                    university=two_year_university,
+                    equivalent_course=two_year_course
+                )
+
+                # Update the 2-year course to link back to the 4-year course
+                two_year_course.equivalent_course = four_year_course
+                two_year_course.save()
             return Response({"message": "Data imported successfully"}, status=201)
         else:
             return Response(file_serializer.errors, status=400)

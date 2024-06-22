@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Course, University
 
 class UniversitySerializer(serializers.ModelSerializer):
+    university_type = serializers.ChoiceField(choices=University.UNIVERSITY_TYPES)
     class Meta:
         model = University
         fields = '__all__'
