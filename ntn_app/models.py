@@ -20,6 +20,11 @@ class Course(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     # four_year_university = models.ForeignKey(University, related_name='university', on_delete=models.CASCADE, blank=True)
     # two_year_university = models.ForeignKey(University, related_name='community_college', on_delete=models.CASCADE, blank=True)
-    equivalent_course = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL)
+    equivalent_course = models.ManyToManyField('self', blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
+
+class Student(models.Model):
+    name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+
