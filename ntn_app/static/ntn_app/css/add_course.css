@@ -1,0 +1,33 @@
+.description {
+    margin-top: 1%;
+}
+
+.paragraph{
+    font-size: 1.2em;
+}
+
+.title{
+    font-size: 2em;
+    margin-bottom: 1px;
+}
+
+.form-container{
+    /* border: black solid; */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.add-course{
+    /* background-color: aquamarine; */
+    flex-grow: 2;
+}
+
+.added-courses{
+    background-color: rgb(216, 216, 216);
+    border-radius: 5%;
+    flex-grow: 1
+}
+
+.bootstrap-form{
+    margin:2%;
+}

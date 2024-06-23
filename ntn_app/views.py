@@ -22,7 +22,7 @@ def ViewDataUpload(request):
 
 
 def add_course(request):
-    return render(request, 'ntn_app/add_course.html')
+    return render(request, 'ntn_app/add_course2.html')
 
 class ExcelUploadView(APIView):
     print('called the excel upload function')

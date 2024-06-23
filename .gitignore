@@ -1,0 +1,5 @@
+*.sqlite3
+*.pyc
+ntn_app/migrations
+**/__pycache__
+national_transfer_ntw/__pycache__/***
