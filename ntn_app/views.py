@@ -20,6 +20,10 @@ class CourseViewSet(viewsets.ModelViewSet):
 def ViewDataUpload(request):
     return render(request,'ntn_app/updated.html')
 
+
+def add_course(request):
+    return render(request, 'ntn_app/add_course.html')
+
 class ExcelUploadView(APIView):
     print('called the excel upload function')
     parser_classes = (MultiPartParser, FormParser,)

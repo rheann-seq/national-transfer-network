@@ -1,0 +1,65 @@
+{% extends "ntn_app/base.html" %}
+
+{% load static %}
+
+{% block body %}
+<link rel="stylesheet" type="text/css" href="{% static 'ntn_app/css/form.css' %}">
+
+<div id="container">
+    <div id="form-container">
+        <div class="zf-templateWidth">
+            <form name='form' method='POST' onSubmit='javascript:document.charset="UTF-8"; return zf_ValidateAndSubmit();' accept-charset='UTF-8' enctype='multipart/form-data' id='form'><input type="hidden" name="zf_referrer_name" value=""><!-- To Track referrals , place the referrer name within the " " in the above hidden input field -->
+                <div class="zf-templateWrapper">
+                    <ul class="zf-tempHeadBdr">
+                        <li class="zf-tempHeadContBdr">
+                            <h2 class="zf-frmTitle"><em>Course Registration</em></h2>
+                            <p class="zf-frmDesc">Want to see which 4-year universities will accept your courses? Just enter your course details and find your perfect match!</p>
+                            <div class="zf-clearBoth"></div>
+                        </li>
+                    </ul>
+                <div class="zf-subContWrap zf-topAlign">
+                    <ul>
+                        <li class="zf-tempFrmWrapper zf-large">
+                            <label class="zf-labelName">Name of the institution you attend</label>
+                            <div class="zf-tempContDiv">
+                                <select class="zf-form-sBox" name="Dropdown" checktype="c1">
+                                <option selected="true" value="-Select-">-Select-</option>
+                                <option>Ivy Tech</option>
+                                <option>West Virginia University</option>
+                                </select><p id="Dropdown_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                            </div>
+                            <div class="zf-clearBoth"></div>
+                        </li>
+
+                        <li class="zf-tempFrmWrapper zf-large">
+                            <label class="zf-labelName">Current Term</label>
+                            <div class="zf-tempContDiv">
+                                <select class="zf-form-sBox" name="Dropdown1" checktype="c1">
+                                <option selected="true" value="-Select-">-Select-</option>
+                                <option value="First&#x20;Choice">First Choice</option>
+                                <option value="Second&#x20;Choice">Second Choice</option>
+                                <option value="Third&#x20;Choice">Third Choice</option>
+                                </select><p id="Dropdown1_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                            </div><div class="zf-clearBoth"></div></li>
+                        <li class="zf-tempFrmWrapper zf-large">
+                            <label class="zf-labelName"> Course Name or ID </label>
+                            <div class="zf-tempContDiv">
+                                <span> <input type="text" name="SingleLine" checktype="c1" value="" maxlength="255" fieldType=1 placeholder=""/></span>
+                                <p id="SingleLine_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                            </div>
+                            <div class="zf-clearBoth"></div>
+                        </li>
+                    </ul>
+                </div>
+                <ul>
+                    <li class="zf-fmFooter">
+                        <button class="zf-submitColor" >Submit</button>
+                    </li>
+                </ul>
+                </div><!-- 'zf-templateWrapper' ends -->
+            </form>
+        </div><!-- 'zf-templateWidth' ends -->
+    <div>
+</div>
+
+{% endblock %}
