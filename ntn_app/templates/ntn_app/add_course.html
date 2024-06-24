@@ -3,63 +3,124 @@
 {% load static %}
 
 {% block body %}
-<link rel="stylesheet" type="text/css" href="{% static 'ntn_app/css/form.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'ntn_app/css/add_course.css' %}">
+        <div class="description">
+            <p class="title">Course Transfer</p>
+            <p class="paragraph">Do you want to see which 4-year universities will accept your courses? Just enter your course details and find your perfect match!</p>
+        </div>
+        <div class="form-container">
+            <div class="add-course">
+                <form class="bootstrap-form">
 
-<div id="container">
-    <div id="form-container">
-        <div class="zf-templateWidth">
-            <form name='form' method='POST' onSubmit='javascript:document.charset="UTF-8"; return zf_ValidateAndSubmit();' accept-charset='UTF-8' enctype='multipart/form-data' id='form'><input type="hidden" name="zf_referrer_name" value=""><!-- To Track referrals , place the referrer name within the " " in the above hidden input field -->
-                <div class="zf-templateWrapper">
-                    <ul class="zf-tempHeadBdr">
-                        <li class="zf-tempHeadContBdr">
-                            <h2 class="zf-frmTitle"><em>Course Registration</em></h2>
-                            <p class="zf-frmDesc">Want to see which 4-year universities will accept your courses? Just enter your course details and find your perfect match!</p>
-                            <div class="zf-clearBoth"></div>
-                        </li>
-                    </ul>
-                <div class="zf-subContWrap zf-topAlign">
-                    <ul>
-                        <li class="zf-tempFrmWrapper zf-large">
-                            <label class="zf-labelName">Name of the institution you attend</label>
-                            <div class="zf-tempContDiv">
-                                <select class="zf-form-sBox" name="Dropdown" checktype="c1">
-                                <option selected="true" value="-Select-">-Select-</option>
-                                <option>Ivy Tech</option>
-                                <option>West Virginia University</option>
-                                </select><p id="Dropdown_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
-                            </div>
-                            <div class="zf-clearBoth"></div>
-                        </li>
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label label">School Name</label>
+                      <select class="form-select" aria-label="Default select example">
+                        <option selected>Select an institution</option>
+                        <option value="1">West Virginia University</option>
+                        <option value="2">Florida University</option>
+                        <option value="2">Ivy Tech</option>
+                        <option value="3">Miami Dade College</option>
+                      </select>
+                    </div>
 
-                        <li class="zf-tempFrmWrapper zf-large">
-                            <label class="zf-labelName">Current Term</label>
-                            <div class="zf-tempContDiv">
-                                <select class="zf-form-sBox" name="Dropdown1" checktype="c1">
-                                <option selected="true" value="-Select-">-Select-</option>
-                                <option value="First&#x20;Choice">First Choice</option>
-                                <option value="Second&#x20;Choice">Second Choice</option>
-                                <option value="Third&#x20;Choice">Third Choice</option>
-                                </select><p id="Dropdown1_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
-                            </div><div class="zf-clearBoth"></div></li>
-                        <li class="zf-tempFrmWrapper zf-large">
-                            <label class="zf-labelName"> Course Name or ID </label>
-                            <div class="zf-tempContDiv">
-                                <span> <input type="text" name="SingleLine" checktype="c1" value="" maxlength="255" fieldType=1 placeholder=""/></span>
-                                <p id="SingleLine_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
-                            </div>
-                            <div class="zf-clearBoth"></div>
-                        </li>
-                    </ul>
+                    <div class="mb-3">
+                        <label for="inputPassword" class="form-label label">Preferred university location</label>
+                        <div class>
+                          <input type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label label">Department</label>
+                      <select class="form-select" aria-label="Default select example">
+                        <option selected>Select a department</option>
+                        <option value="1">ENGL</option>
+                        <option value="2">COMM</option>
+                        <option value="2">MATH</option>
+                        <option value="2">SOC</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label label">Term</label>
+                        <select class="form-select" aria-label="Default select example">
+                          <option selected>Select a term</option>
+                          <option value="1">Summer 2024</option>
+                          <option value="2">Fall 2025</option>
+                          <option value="2">Winter 2024</option>
+                          <option value="2">Spring 2025</option>
+                          <option value="2">Summer 2025</option>
+
+
+                        </select>
+                      </div>
+
+
+                      <div class="mb-3">
+                        <label for="inputPassword" class="form-label label">Course Name or ID</label>
+                        <div class>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+
+                    <button type="submit" class="btn btn-secondary">Add</button>
+                  
+                </form>
+            </div>
+            <div class="added-courses">
+              <form class="bootstrap-form">
+                <div class="mb-3">
+                  <label class="form-label label">Courses</label>
                 </div>
-                <ul>
-                    <li class="zf-fmFooter">
-                        <button class="zf-submitColor" >Submit</button>
-                    </li>
-                </ul>
-                </div><!-- 'zf-templateWrapper' ends -->
-            </form>
-        </div><!-- 'zf-templateWidth' ends -->
-    <div>
-</div>
-
+                  <div>
+                    <table class="table">
+                      <tr class="table-header">
+                        <th>Term</th>
+                        <th>Department</th>
+                        <th>ID</th>
+                        <th>Country</th>
+                        <th></th>
+                      </tr>
+                      <tr class="table-data">
+                        <td>Spring 23'</td>
+                        <td>ENGL</td>
+                        <td>205</td>
+                        <td>3</td>
+                        <td><img src="{% static 'ntn_app/images/trashcan.jpg' %}"
+                           alt="GFG Logo" width="25" 
+                           height="25"> 
+                        </td> 
+                      </tr>
+                      <tr class="table-data">
+                        <td>Winter 22'</td>
+                        <td>COMM</td>
+                        <td>115</td>
+                        <td>1</td>
+                        <td><img src="{% static 'ntn_app/images/trashcan.jpg' %}"
+                          alt="GFG Logo" width="25" 
+                          height="25"> 
+                       </td> 
+                      </tr>
+                      
+                      <tr class="table-data">
+                        <td>Fall 23'</td>
+                        <td>HIST</td>
+                        <td>102</td>
+                        <td>2</td>
+                        <td><img src="{% static 'ntn_app/images/trashcan.jpg' %}"
+                          alt="GFG Logo" width="25" 
+                          height="25"> 
+                       </td> 
+                      </tr>
+                    </table>
+                  </div>
+                  {% comment %} <div class="my-courses">
+                    <div class="transf subj_1">ENGL</div>
+                    <div class="transf course_1">2O5</div>
+                    <div class="transf crdts_1">3</div> {% endcomment %}
+                  </div>
+                
+              </form>
+            </div>
+    </div>
 {% endblock %}
