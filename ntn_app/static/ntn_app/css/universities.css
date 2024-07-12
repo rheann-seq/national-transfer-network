@@ -1,0 +1,23 @@
+.row-container{
+    display:flex;
+}
+
+.perc{
+    background-color: #0056d2;
+}
+
+.info{
+    background-color: gray;
+}
+
+.money{
+    background-color: aquamarine;
+}
+
+.title{
+    font-size: 2em;
+    margin-bottom: 1px;
+    color:#0056d2;
+    font-weight: bold;
+    /* margin-left: 2%; */
+}

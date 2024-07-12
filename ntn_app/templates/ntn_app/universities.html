@@ -1,0 +1,19 @@
+{% extends "ntn_app/base.html" %}
+
+{% load static %}
+
+{% block body %}
+<link rel="stylesheet" type="text/css" href="{% static 'ntn_app/css/universities.css' %}">
+        <div class="description">
+            <p class="title">5 Universities </p>
+        </div>
+        <div class="container">
+          <div class="row-container">
+            <div class="perc">60% match</div>
+            <div class="info">
+              California Baptist University<br>Riverside, <br> California CA
+            </div>
+            <div class="money">$$$</div>
+          </div>
+        </div>
+{% endblock %}
