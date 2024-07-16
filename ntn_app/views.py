@@ -17,8 +17,11 @@ class CourseViewSet(viewsets.ModelViewSet):
     print(str(queryset.query))
     serializer_class = CourseSerializer    
 
-def ViewDataUpload(request):
-    return render(request,'ntn_app/updated.html')
+def TwoYearUpload(request):
+    return render(request,'ntn_app/2year_upload.html')
+
+def FourYearUpload(request):
+    return render(request,'ntn_app/4year_upload.html')
 
 
 def add_course(request):
