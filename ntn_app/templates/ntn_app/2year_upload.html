@@ -81,7 +81,7 @@
 				<!-- Left Half: Form -->
 				<div class="col-md-6">
 					<h2>Upload Your Community College Data</h2>
-					<form>
+					<form method="post">{% csrf_token %}
 						<div class="form-group">
 							<label for="institutionName">Community College Name</label>
 							<select class="form-control" id="institutionName" required>
@@ -129,7 +129,7 @@
 						<img src="{% static 'ntn_app/images/template.png' %}" alt="Excel Template" class="img-fluid" />
 					</div>
 					<br />
-					<form>
+					<form method="post">{% csrf_token %}
 						<div class="form-group flex-grow-1">
 							<label for="excelFile">Upload Excel File</label>
 							<input type="file" class="form-control-file" id="excelFile" required />
