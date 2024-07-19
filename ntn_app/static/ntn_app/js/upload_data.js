@@ -37,6 +37,7 @@ $(document).ready(function () {
 			success: function (response) {
 				console.log("Data uploaded successfully");
 				$("#message").html("<p>" + response.message + "</p>");
+				$("#fileInput").val("");
 			},
 			error: function (xhr, status, error) {
 				$("#message").html("<p>" + xhr.responseText + "</p>");
