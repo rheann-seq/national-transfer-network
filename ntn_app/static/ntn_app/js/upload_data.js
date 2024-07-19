@@ -26,7 +26,7 @@ $(document).ready(function () {
 		formData.append("file", file);
 
 		$.ajax({
-			url: "http://lcoalhost:8000/api/upload_excel/", // Replace with the actual URL of your ExcelUploadView
+			url: "http://localhost:8000/api/upload_excel/", // Replace with the actual URL of your ExcelUploadView
 			type: "POST",
 			data: formData,
 			processData: false,
