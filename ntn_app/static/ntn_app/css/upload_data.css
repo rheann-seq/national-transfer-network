@@ -1,8 +1,8 @@
 body {
 	background-color: #d6edf6;
 	color: #212529;
-	font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 .container {
 	background-color: white;
@@ -12,18 +12,18 @@ body {
 	margin-top: 50px;
 }
 h2 {
-	color: #212529
-	border-bottom: 3px solid #ffcc00;
+	color: #212529;
+	/* border-bottom: 3px solid #6c757d; */
 	display: inline-block;
 	padding-bottom: 5px;
 	margin-bottom: 20px;
 }
 .form-group label {
-	color: #212529
+	color: #212529;
 	font-weight: bold;
 }
 .btn-primary {
-	background-color: #0D6EFD;
+	background-color: #0d6efd;
 	transition: background-color 0.3s ease;
 	color: #fff;
 	width: 100%;
@@ -63,7 +63,7 @@ h2 {
 	color: #000;
 	width: 100%;
 }
-#fileInput:hover{
+#fileInput:hover {
 	cursor: pointer;
 }
 .or-divider {
@@ -74,13 +74,13 @@ h2 {
 	margin: 0 20px;
 }
 .or-divider::before {
-	content: '';
+	content: "";
 	flex: 1;
 	border-left: 1px solid #000;
 	margin-bottom: 10px;
 }
 .or-divider::after {
-	content: '';
+	content: "";
 	flex: 1;
 	border-left: 1px solid #000;
 	margin-top: 10px;
