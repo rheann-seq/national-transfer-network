@@ -27,6 +27,9 @@ def FourYearUpload(request):
 def add_course(request):
     return render(request, 'ntn_app/add_course.html')
 
+def login_view(request):
+    return render(request, 'ntn_app/login.html')
+
 class ExcelUploadView(APIView):
     print('called the excel upload function')
     parser_classes = (MultiPartParser, FormParser,)
