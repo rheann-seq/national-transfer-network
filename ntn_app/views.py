@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
+
+from ntn_app.forms import LoginForm
 from .models import Course, University
 from .serializers import CourseSerializer, UniversitySerializer, ExcelFileSerializer
 import pandas as pd
@@ -28,7 +32,29 @@ def add_course(request):
     return render(request, 'ntn_app/add_course.html')
 
 def login_view(request):
-    return render(request, 'ntn_app/login.html')
+    context = {}
+
+    # Just display the registration form if this is a GET request.
+    if request.method == 'GET':
+        context['form'] = LoginForm()
+        return render(request, 'ntn_app/login.html', context)
+
+    # Creates a bound form from the request POST parameters and makes the 
+    # form available in the request context dictionary.
+    form = LoginForm(request.POST)
+    context['form'] = form
+
+    # Validates the form.
+    if not form.is_valid():
+        context['message'] = 'wrong username or password'
+        return render(request, 'ntn_app/login.html', context)
+
+    new_user = authenticate(username=form.cleaned_data['username'],
+                            password=form.cleaned_data['password'])
+
+    login(request, new_user)
+    return redirect(reverse('add-course'))
+
 
 class ExcelUploadView(APIView):
     print('called the excel upload function')

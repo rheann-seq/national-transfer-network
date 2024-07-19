@@ -4,8 +4,22 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=20)
-    password = forms.CharField(max_length=200, widget=forms.PasswordInput())
+    username = forms.CharField(
+        max_length=20,
+        required=True,
+        widget=forms.TextInput(
+                attrs={'class': "form-control"}
+        )
+    )
+    password = forms.CharField(
+        max_length=200,
+        required=True,
+        widget=forms.PasswordInput(
+            attrs={
+            'class': 'form-control'
+            }
+        )
+    )
 
     # Customizes form validation for properties that apply to more
     # than one field.  Overrides the forms.Form.clean function.
