@@ -26,7 +26,7 @@ $(document).ready(function () {
 		formData.append("file", file);
 
 		$.ajax({
-			url: "http://127.0.0.1:8000/api/upload_excel/", // Replace with the actual URL of your ExcelUploadView
+			url: "http://lcoalhost:8000/api/upload_excel/", // Replace with the actual URL of your ExcelUploadView
 			type: "POST",
 			data: formData,
 			processData: false,
@@ -35,6 +35,7 @@ $(document).ready(function () {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
 			success: function (response) {
+				console.log("Data uploaded successfully");
 				$("#message").html("<p>" + response.message + "</p>");
 			},
 			error: function (xhr, status, error) {
