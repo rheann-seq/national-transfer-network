@@ -113,6 +113,20 @@ class ExcelUploadView(APIView):
             excel_file = request.FILES['file']
             df = pd.read_excel(excel_file)
 
+            required_columns = [
+                '2yearCollegeName', '2yearCollegeLocation', 'EffectiveTerm',
+                'CC_Subject', 'Uni_Subject', 'Credits', '4yearCollegeName', '4yearCollegeLocation'
+            ]
+
+            # Check if all required columns are present
+            if not all(column in df.columns for column in required_columns):
+                missing_columns = [column for column in required_columns if column not in df.columns]
+                return Response({"error": f"Missing columns: {', '.join(missing_columns)}"}, status=400)
+
+            # Check if there is no data or all rows are empty
+            if df[required_columns].dropna(how='all').empty:
+                return Response({"error": "Please add some data before uploading."}, status=400)
+
             for index, row in df.iterrows():
                 four_year_university, _ = University.objects.get_or_create(
                     name=row['4yearCollegeName'],

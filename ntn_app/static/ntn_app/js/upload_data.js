@@ -37,10 +37,14 @@ $(document).ready(function () {
 			success: function (response) {
 				console.log("Data uploaded successfully");
 				$("#message").html("<p>" + response.message + "</p>");
+				$("#message").html("<p>" + response.error + "</p>");
 				$("#fileInput").val("");
 			},
 			error: function (xhr, status, error) {
-				$("#message").html("<p>" + xhr.responseText + "</p>");
+				var response = JSON.parse(xhr.responseText);
+				// $("#message").html("<p>" + xhr.responseText + "</p>");
+				$("#message").html("<p>" + response.error + "</p>");
+				$("#fileInput").val("");
 			},
 		});
 	});
