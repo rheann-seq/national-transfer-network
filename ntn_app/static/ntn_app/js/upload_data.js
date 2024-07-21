@@ -48,4 +48,33 @@ $(document).ready(function () {
 			},
 		});
 	});
+
+	$("#uploadData").click(function (event) {
+		event.preventDefault();
+
+		var formData = {
+			twoYearInstitutionName: $("#twoYearInstitutionName").val(),
+			twoYearInstitutionLocation: $("#twoYearInstitutionLocation").val(),
+			effectiveTerm: $("#effectiveTerm").val(),
+			ccSubject: $("#ccSubject").val(),
+			uniSubject: $("#uniSubject").val(),
+			credits: $("#credits").val(),
+			fourYearInstitutionName: $("#fourYearInstitutionName").val(),
+			fourYearInstitutionLocation: $("#fourYearInstitutionLocation").val(),
+			csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+		};
+
+		$.ajax({
+			url: "http://localhost:8000/upload-data/",
+			type: "POST",
+			data: formData,
+			success: function (response) {
+				$("#message1").html("<p>Data uploaded successfully!</p>");
+			},
+			error: function (xhr, status, error) {
+				var response = JSON.parse(xhr.responseText);
+				$("#message1").html("<p>" + response.error + "</p>");
+			},
+		});
+	});
 });

@@ -21,14 +21,14 @@
 					<h2>Upload Your Institution Data</h2>
 					<form>
 						<div class="form-group">
-							<label for="institutionName">Institution Name</label>
-							<select class="form-control" id="institutionName" required>
+							<label for="fourYearInstitutionName">Institution Name</label>
+							<select class="form-control" id="fourYearInstitutionName" required>
 								<option value="">Select Institution</option>
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="institutionLocation">Institution Location</label>
-							<select class="form-control" id="institutionLocation" required>
+							<label for="fourYearInstitutionLocation">Institution Location</label>
+							<select class="form-control" id="fourYearInstitutionLocation" required>
 								<option value="">Select Location</option>
 								<option value="New York, NY">New York, NY</option>
 								<option value="Los Angeles, CA">Los Angeles, CA</option>
@@ -59,13 +59,20 @@
 							<input type="number" class="form-control" id="credits" placeholder="Enter Credits" required />
 						</div>
 						<div class="form-group">
-							<label for="relatedInstitutionName">4-year Partner Institution Name</label>
-							<select class="form-control" id="relatedInstitutionName" required>
+							<label for="twoYearInstitutionName">Partner Institution Name</label>
+							<select class="form-control" id="twoYearInstitutionName" required>
 								<option value="">Select Institution</option>
 							</select>
 						</div>
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<div class="form-group">
+							<label for="twoYearInstitutionLocation">Partner Institution Location</label>
+							<select class="form-control" id="twoYearInstitutionLocation" required>
+								<option value="">Select Location</option>
+							</select>
+						</div>
+						<button id="uploadData" type="submit" class="btn btn-primary">Submit</button>
 					</form>
+					<div id="message1"></div>
 				</div>
 				<!-- OR Divider -->
 				<div class="col-md-2 d-flex align-items-center justify-content-center">
@@ -103,13 +110,13 @@
 					method: "GET",
 					success: function (response) {
 						let institutions = response;
-						let institutionDropdown = $("#institutionName, #relatedInstitutionName");
+						let institutionDropdown = $("#fourYearInstitutionName, #twoYearInstitutionName");
 						institutions.forEach((institution) => {
 							institutionDropdown.append(new Option(institution.name, institution.name));
 						});
 
 						// Initialize Select2 for searchable dropdowns
-						$("#institutionName, #relatedInstitutionName").select2();
+						$("#fourYearInstitutionName, #twoYearInstitutionName").select2();
 					},
 					error: function (xhr, status, error) {
 						console.error("Error fetching institutions: ", error);

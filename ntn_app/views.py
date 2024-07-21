@@ -3,13 +3,14 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework import status
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse
 
 from ntn_app.forms import LoginForm, RegistrationForm
 from .models import Course, Profile, University
-from .serializers import CourseSerializer, UniversitySerializer, ExcelFileSerializer
+from .serializers import CourseSerializer, UniversitySerializer, ExcelFileSerializer, UploadDataSerializer
 import pandas as pd
 
 def entry_page_view(request):
@@ -161,3 +162,57 @@ class ExcelUploadView(APIView):
             return Response({"message": "Data imported successfully"}, status=201)
         else:
             return Response(file_serializer.errors, status=400)
+
+class UploadDataView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = UploadDataSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.validated_data
+
+            twoYearInstitutionName = data['twoYearInstitutionName']
+            twoYearInstitutionLocation = data['twoYearInstitutionLocation']
+            effective_term = data['effectiveTerm']
+            cc_subject = data['ccSubject']
+            uni_subject = data['uniSubject']
+            credits = data['credits']
+            fourYearInstitutionName = data['fourYearInstitutionName']
+            fourYearInstitutionLocation = data['fourYearInstitutionLocation']
+
+            try:
+                four_year_university, _ = University.objects.get_or_create(
+                    name=fourYearInstitutionName,
+                    location=fourYearInstitutionLocation,
+                    university_type='FOUR_YEAR'
+                )
+                two_year_university, _ = University.objects.get_or_create(
+                    name=twoYearInstitutionName,
+                    location=twoYearInstitutionLocation,
+                    university_type='TWO_YEAR'
+                )
+
+                # 2-year course
+                two_year_course = Course.objects.create(
+                    course_name=cc_subject,
+                    effective_term=effective_term,
+                    credits=credits,
+                    university=two_year_university,
+                )
+
+                # 4-year course
+                four_year_course = Course.objects.create(
+                    course_name=uni_subject,
+                    effective_term=effective_term,
+                    credits=credits,
+                    university=four_year_university,
+                    equivalent_course=two_year_course
+                )
+
+                # Update the 2-year course to link back to the 4-year course
+                two_year_course.equivalent_course = four_year_course
+                two_year_course.save()
+
+                return Response({"message1": "Data uploaded successfully!"}, status=status.HTTP_201_CREATED)
+            except Exception as e:
+                return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

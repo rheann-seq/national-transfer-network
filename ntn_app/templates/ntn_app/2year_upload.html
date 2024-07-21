@@ -21,14 +21,14 @@
 					<form method="post">
 						{% csrf_token %}
 						<div class="form-group">
-							<label for="institutionName">Community College Name</label>
-							<select class="form-control" id="institutionName" required>
+							<label for="twoYearInstitutionName">Community College Name</label>
+							<select class="form-control" id="twoYearInstitutionName" required>
 								<option value="">Select Institution</option>
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="institutionLocation">Community College Location</label>
-							<select class="form-control" id="institutionLocation" required>
+							<label for="twoYearInstitutionLocation">Community College Location</label>
+							<select class="form-control" id="twoYearInstitutionLocation" required>
 								<option value="">Select Location</option>
 							</select>
 						</div>
@@ -49,13 +49,20 @@
 							<input type="number" class="form-control" id="credits" placeholder="Enter Credits" required />
 						</div>
 						<div class="form-group">
-							<label for="relatedInstitutionName">4-year Partner Institution Name</label>
-							<select class="form-control" id="relatedInstitutionName" required>
+							<label for="fourYearInstitutionName">4-year Partner Institution Name</label>
+							<select class="form-control" id="fourYearInstitutionName" required>
 								<option value="">Select Institution</option>
 							</select>
 						</div>
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<div class="form-group">
+							<label for="fourYearInstitutionLocation">Community College Location</label>
+							<select class="form-control" id="fourYearInstitutionLocation" required>
+								<option value="">Select Location</option>
+							</select>
+						</div>
+						<button id="uploadData" type="submit" class="btn btn-primary">Submit</button>
 					</form>
+					<div id="message1"></div>
 				</div>
 				<!-- OR Divider -->
 				<div class="col-md-2 d-flex align-items-center justify-content-center">
@@ -100,7 +107,7 @@
 					"Dallas, TX",
 					"San Jose, CA",
 				];
-				let locationDropdown = $("#institutionLocation");
+				let locationDropdown = $("#twoYearInstitutionLocation", "#fourYearInstitutionLocation");
 				cities.forEach((city) => {
 					locationDropdown.append(new Option(city, city));
 				});
@@ -111,13 +118,13 @@
 					method: "GET",
 					success: function (response) {
 						let institutions = response;
-						let institutionDropdown = $("#institutionName, #relatedInstitutionName");
+						let institutionDropdown = $("#twoYearInstitutionName, #fourYearInstitutionName");
 						institutions.forEach((institution) => {
 							institutionDropdown.append(new Option(institution.name, institution.name));
 						});
 
 						// Initialize Select2 for searchable dropdowns
-						$("#institutionName, #relatedInstitutionName").select2();
+						$("#twoYearInstitutionName, #fourYearInstitutionName").select2();
 					},
 					error: function (xhr, status, error) {
 						console.error("Error fetching institutions: ", error);
