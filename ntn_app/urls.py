@@ -15,5 +15,6 @@ urlpatterns = [
     path('two_year_upload/', views.TwoYearUpload, name='upload1'),
     path('four_year_upload/', views.FourYearUpload, name='upload2'),
     path('add_course', views.add_course, name="add-course"),
-    path('', views.login_view, name="login")
+    path('', views.login_view, name="login"),
+    path('institution_register', views.inst_register_view, name="institution-register")
 ]
