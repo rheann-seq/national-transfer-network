@@ -36,9 +36,12 @@ $(document).ready(function () {
 			},
 			success: function (response) {
 				console.log("Data uploaded successfully");
-				$("#message").html("<p>" + response.message + "</p>");
-				$("#message").html("<p>" + response.error + "</p>");
-				$("#fileInput").val("");
+				if (response.error) {
+					$("#message").html("<p class='text-danger'>" + response.error + "</p>");
+				} else {
+					$("#message").html("<p class='text-success'>" + response.message + "</p>");
+					$("#fileInput").val("");
+				}
 			},
 			error: function (xhr, status, error) {
 				var response = JSON.parse(xhr.responseText);
