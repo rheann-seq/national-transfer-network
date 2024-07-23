@@ -17,10 +17,10 @@ class ExcelFileSerializer(serializers.Serializer):
 
 class UploadDataSerializer(serializers.Serializer):
     fourYearInstitutionName = serializers.CharField(max_length=255)
-    fourYearInstitutionLocationLocation = serializers.CharField(max_length=300)
+    fourYearInstitutionLocation = serializers.CharField(max_length=300)
     effectiveTerm = serializers.CharField(max_length=10)
     ccSubject = serializers.CharField(max_length=255)
     uniSubject = serializers.CharField(max_length=255)
     credits = serializers.IntegerField()
     twoYearInstitutionName = serializers.CharField(max_length=255)    
-    twoYearInstitutionLocationLocation = serializers.CharField(max_length=300)
+    twoYearInstitutionLocation = serializers.CharField(max_length=300)

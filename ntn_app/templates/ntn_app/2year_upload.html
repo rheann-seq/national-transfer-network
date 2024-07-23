@@ -107,9 +107,11 @@
 					"Dallas, TX",
 					"San Jose, CA",
 				];
-				let locationDropdown = $("#twoYearInstitutionLocation", "#fourYearInstitutionLocation");
+				let locationDropdown1 = $("#twoYearInstitutionLocation");
+				let locationDropdown2 = $("#fourYearInstitutionLocation");
 				cities.forEach((city) => {
-					locationDropdown.append(new Option(city, city));
+					locationDropdown1.append(new Option(city, city));
+					locationDropdown2.append(new Option(city, city));
 				});
 
 				// Populate the institutions dropdown using Hipolabs University API
