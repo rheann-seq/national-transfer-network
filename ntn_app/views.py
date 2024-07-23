@@ -55,7 +55,7 @@ def login_view(request):
                             password=form.cleaned_data['password'])
 
     login(request, new_user)
-    return redirect(reverse('add-course'))
+    return redirect(reverse('upload-two-years'))
 
 
 class ExcelUploadView(APIView):
