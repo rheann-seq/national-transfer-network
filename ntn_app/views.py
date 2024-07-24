@@ -4,9 +4,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.urls import reverse
 
-from ntn_app.forms import LoginForm
+from ntn_app.forms import LoginForm, RegistrationForm
 from .models import Course, University
 from .serializers import CourseSerializer, UniversitySerializer, ExcelFileSerializer
 import pandas as pd
@@ -32,8 +33,38 @@ def add_course(request):
     return render(request, 'ntn_app/add_course.html')
 
 def inst_register_view(request):
-    return render(request, 'ntn_app/register.html')
+    context = {}
 
+    if request.method == "GET":
+        context['form'] =  RegistrationForm()
+        return render(request, 'ntn_app/register.html', context)
+
+    # Creates a bound form from the request POST parameters and makes the 
+    # form available in the request context dictionary.
+    form = RegistrationForm(request.POST)
+    context['form'] = form
+
+    # Validates the form.
+    if not form.is_valid():
+        print("\n"*20)
+        print("form is not valid")
+        return render(request, 'ntn_app/register.html', context)
+
+    return render(request, 'ntn_app/2year_upload.html', context)
+
+    # # At this point, the form data is valid.  Register and login the user.
+    # new_user = User.objects.create_user(username=form.cleaned_data['username'], 
+    #                                     password=form.cleaned_data['password1'],
+    #                                     email=form.cleaned_data['email'],
+    #                                     first_name=form.cleaned_data['first_name'],
+    #                                     last_name=form.cleaned_data['last_name'])
+    # new_user.save()
+
+    # new_user = authenticate(username=form.cleaned_data['username'],
+    #                         password=form.cleaned_data['password1'])
+
+    # login(request, new_user)
+    # return redirect(reverse('home'))
 
 def login_view(request):
     context = {}

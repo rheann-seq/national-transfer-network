@@ -4,12 +4,16 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 
-class RegiterForm(forms.Form):
+class RegistrationForm(forms.Form):
     name_of_institution = forms.CharField(
         max_length=200,
         required=True,
+        label="Institution name",
         widget=forms.TextInput(
-                attrs={'class': "form-control"}
+                attrs={
+                    'class': "form-control",
+                    'placeholder': "Institution name"
+                }
         )
     )
 
@@ -17,7 +21,10 @@ class RegiterForm(forms.Form):
         max_length=50,
         required=True,
         widget=forms.TextInput(
-                attrs={'class': "form-control"}
+                attrs={
+                    'class': "form-control",
+                    'placeholder': 'State'
+                }
         )
     )
 
@@ -25,7 +32,10 @@ class RegiterForm(forms.Form):
         max_length=200,
         required=True,
         widget=forms.TextInput(
-                attrs={'class': "form-control"}
+                attrs={
+                    'class': "form-control",
+                    'placeholder': 'Website'
+                }
         )
     )
 
@@ -33,7 +43,10 @@ class RegiterForm(forms.Form):
         max_length=200,
         required=True,
         widget=forms.TextInput(
-                attrs={'class': "form-control"}
+                attrs={
+                    'class': "form-control",
+                    'placeholder': 'Name of contact person'
+                }
         )
     )
 
@@ -41,7 +54,10 @@ class RegiterForm(forms.Form):
         max_length=70,
         required=True,
         widget=forms.TextInput(
-                attrs={'class': "form-control"}
+                attrs={
+                    'class': "form-control",
+                    'placeholder': 'Title'
+                }
         )
     )
 
@@ -49,32 +65,45 @@ class RegiterForm(forms.Form):
         max_length=50,
         required=True,
         widget=forms.EmailInput(
-                attrs={'class': "form-control"}
+                attrs={
+                    'class': "form-control",
+                    'placeholder': 'Email'
+                }
         )
     )
 
-    phone_number  = forms.CharField(
+    phone  = forms.CharField(
         required=False,
         max_length=16,
         label='Phone #',
-        widget=forms.EmailInput(
-            attrs={'class': "form-control"}
+        widget=forms.TextInput(
+            attrs={
+                'class': "form-control",
+                'placeholder': 'Phone number'
+            }
         )
     )
 
     password1  = forms.CharField(
         max_length=200,
         label='Password', 
+        required = True,
         widget=forms.PasswordInput(
-            attrs={'class': "form-control"}
+            attrs={
+                'class': "form-control",
+                'placeholder': 'Password'
+            }
         )
     )
-    
+
     password2  = forms.CharField(
         max_length=200,
         label='Confirm password',  
+        required = True,
         widget=forms.PasswordInput(
-            attrs={'class': "form-control"}
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Confirm Password'}
             )
         )
 
@@ -95,19 +124,16 @@ class RegiterForm(forms.Form):
         return cleaned_data
 
     # Customizes form validation for the username field.
-    def clean_username(self):
+    def clean_email(self):
         # Confirms that the username is not already present in the
         # User model database.
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(username__exact=username):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email__exact=email):
             raise forms.ValidationError("Username is already taken.")
 
         # We must return the cleaned data we got from the cleaned_data
         # dictionary
-        return username
-
-    
-
+        return email
 
 
 class LoginForm(forms.Form):
