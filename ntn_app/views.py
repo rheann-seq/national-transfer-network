@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 from ntn_app.forms import LoginForm, RegistrationForm
-from .models import Course, University
+from .models import Course, Profile, University
 from .serializers import CourseSerializer, UniversitySerializer, ExcelFileSerializer
 import pandas as pd
 
@@ -48,21 +48,33 @@ def inst_register_view(request):
     if not form.is_valid():
         return render(request, 'ntn_app/register.html', context)
 
-    return render(request, 'ntn_app/2year_upload.html', context)
 
     # # At this point, the form data is valid.  Register and login the user.
-    # new_user = User.objects.create_user(username=form.cleaned_data['username'], 
-    #                                     password=form.cleaned_data['password1'],
-    #                                     email=form.cleaned_data['email'],
-    #                                     first_name=form.cleaned_data['first_name'],
-    #                                     last_name=form.cleaned_data['last_name'])
-    # new_user.save()
+    new_user = User.objects.create_user(
+        username=form.cleaned_data['email'],
+        password=form.cleaned_data['password1'],
+        email=form.cleaned_data['email'],
+        first_name=form.cleaned_data['name_of_contact_person']
+    )
+    new_user.save()
 
-    # new_user = authenticate(username=form.cleaned_data['username'],
-    #                         password=form.cleaned_data['password1'])
+    new_profile = Profile(
+        user = new_user,
+        name_of_institution = form.cleaned_data['name_of_institution'],
+        state = form.cleaned_data['state'],
+        website = form.cleaned_data['website'],
+        title = form.cleaned_data['title'],
+        phone = form.cleaned_data['phone'],
+    )
 
-    # login(request, new_user)
-    # return redirect(reverse('home'))
+    new_profile.save()
+
+    new_user = authenticate(username=form.cleaned_data['email'],
+                            password=form.cleaned_data['password1'])
+
+    login(request, new_user)
+    
+    return redirect(reverse('upload1'))
 
 def login_view(request):
     context = {}

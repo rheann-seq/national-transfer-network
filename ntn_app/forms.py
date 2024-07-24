@@ -96,7 +96,6 @@ class RegistrationForm(forms.Form):
         )
     )
 
-
     password2  = forms.CharField(
         max_length=200,
         label='Password', 
@@ -108,7 +107,6 @@ class RegistrationForm(forms.Form):
             }
         )
     )
-
 
 
     # Customizes form validation for properties that apply to more

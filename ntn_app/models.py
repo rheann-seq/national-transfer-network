@@ -31,11 +31,8 @@ class Profile(models.Model):
     name_of_institution = models.CharField(max_length=255, blank=False)
     state = models.CharField(max_length=100, blank=False)
     website = models.URLField(max_length=200, blank=False)
-    name_of_contact_person = models.CharField(max_length=100, blank=False)
     title = models.CharField(max_length=100, blank=False)
     phone = models.CharField(max_length=20, blank=False)
-    password1 = models.CharField(max_length=128, blank=False)  # Note: storing passwords in plain text is not secure. This is for illustration only.
-    password2 = models.CharField(max_length=128, blank=False)  # Note: same as above.
 
     def __str__(self):
         return self.user.username
