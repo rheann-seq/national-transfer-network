@@ -11,6 +11,8 @@ from .models import Course, University
 from .serializers import CourseSerializer, UniversitySerializer, ExcelFileSerializer
 import pandas as pd
 
+def entry_page_view(request):
+    return render(request, 'ntn_app/entry_page.html')
 class UniversityViewSet(viewsets.ModelViewSet):
     queryset =  University.objects.all()
     print(str(queryset.query))
@@ -53,7 +55,7 @@ def login_view(request):
                             password=form.cleaned_data['password'])
 
     login(request, new_user)
-    return redirect(reverse('add-course'))
+    return redirect(reverse('upload-two-years'))
 
 
 class ExcelUploadView(APIView):
