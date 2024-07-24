@@ -16,6 +16,6 @@ urlpatterns = [
     path('four_year_upload/', views.FourYearUpload, name='upload-four-years'),
     path('add_course', views.add_course, name="add-course"),
     path('', views.login_view, name="login"),
+    path('institution_register', views.inst_register_view, name="institution-register"),
     path('entry_page', views.entry_page_view, name="entry")
-
 ]

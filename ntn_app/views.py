@@ -4,10 +4,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.urls import reverse
 
-from ntn_app.forms import LoginForm
-from .models import Course, University
+from ntn_app.forms import LoginForm, RegistrationForm
+from .models import Course, Profile, University
 from .serializers import CourseSerializer, UniversitySerializer, ExcelFileSerializer
 import pandas as pd
 
@@ -32,6 +33,50 @@ def FourYearUpload(request):
 
 def add_course(request):
     return render(request, 'ntn_app/add_course.html')
+
+def inst_register_view(request):
+    context = {}
+
+    if request.method == "GET":
+        context['form'] =  RegistrationForm()
+        return render(request, 'ntn_app/register.html', context)
+
+    # Creates a bound form from the request POST parameters and makes the 
+    # form available in the request context dictionary.
+    form = RegistrationForm(request.POST)
+    context['form'] = form
+
+    # Validates the form.
+    if not form.is_valid():
+        return render(request, 'ntn_app/register.html', context)
+
+
+    # # At this point, the form data is valid.  Register and login the user.
+    new_user = User.objects.create_user(
+        username=form.cleaned_data['email'],
+        password=form.cleaned_data['password1'],
+        email=form.cleaned_data['email'],
+        first_name=form.cleaned_data['name_of_contact_person']
+    )
+    new_user.save()
+
+    new_profile = Profile(
+        user = new_user,
+        name_of_institution = form.cleaned_data['name_of_institution'],
+        state = form.cleaned_data['state'],
+        website = form.cleaned_data['website'],
+        title = form.cleaned_data['title'],
+        phone = form.cleaned_data['phone'],
+    )
+
+    new_profile.save()
+
+    new_user = authenticate(username=form.cleaned_data['email'],
+                            password=form.cleaned_data['password1'])
+
+    login(request, new_user)
+    
+    return redirect(reverse('upload1'))
 
 def login_view(request):
     context = {}
