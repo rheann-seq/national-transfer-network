@@ -91,21 +91,25 @@ class RegistrationForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class': "form-control",
+                'placeholder': 'Confirm Password'
+            }
+        )
+    )
+
+
+    password2  = forms.CharField(
+        max_length=200,
+        label='Password', 
+        required = True,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': "form-control",
                 'placeholder': 'Password'
             }
         )
     )
 
-    password2  = forms.CharField(
-        max_length=200,
-        label='Confirm password',  
-        required = True,
-        widget=forms.PasswordInput(
-            attrs={
-                'class': 'form-control',
-                'placeholder': 'Confirm Password'}
-            )
-        )
+
 
     # Customizes form validation for properties that apply to more
     # than one field.  Overrides the forms.Form.clean function.
@@ -114,14 +118,18 @@ class RegistrationForm(forms.Form):
         # of cleaned data as a result
         cleaned_data = super().clean()
 
-        # Confirms that the two password fields match
-        password1 = cleaned_data.get('password1')
-        password2 = cleaned_data.get('password2')
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords did not match.")
-
         # We must return the cleaned data we got from our parent.
         return cleaned_data
+
+    def clean_password2(self):
+        # Confirms that the two password fields match
+
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords did not match.")
+        
+        return password1
 
     # Customizes form validation for the username field.
     def clean_email(self):
@@ -129,7 +137,7 @@ class RegistrationForm(forms.Form):
         # User model database.
         email = self.cleaned_data.get('email')
         if User.objects.filter(email__exact=email):
-            raise forms.ValidationError("Username is already taken.")
+            raise forms.ValidationError("Email already in use")
 
         # We must return the cleaned data we got from the cleaned_data
         # dictionary

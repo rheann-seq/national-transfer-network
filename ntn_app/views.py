@@ -46,8 +46,6 @@ def inst_register_view(request):
 
     # Validates the form.
     if not form.is_valid():
-        print("\n"*20)
-        print("form is not valid")
         return render(request, 'ntn_app/register.html', context)
 
     return render(request, 'ntn_app/2year_upload.html', context)
