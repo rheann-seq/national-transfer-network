@@ -39,15 +39,25 @@
               <li class="nav-item">
 
                 {% url 'login' as login_url %}
-                <a{% if request.path == login_url %} class=" nav-link active"{% endif %}
-                    href="{{ login_url }}">Login</a>
+                {% if request.path == login_url%}
+                  <a class=" nav-link active" href="{{ login_url }}">
+                      Login
+                  </a>
+                {% else %} 
+                  <a class=" nav-link active" href="{{ login_url }}">
+                    Login
+                  </a>
+                {%endif%}
               </li>
               {% else %}
               <li class="nav-item">
 
                 {% url 'upload-two-years' as upload %}
-                <a{% if request.path == upload %} class=" nav-link active"{% endif %}
-                    href="{{ upload }}">Upload Data</a>
+                {% if request.path == upload %}
+                  <a class="nav-link active" href="{{ upload }}">Upload Data</a>
+                {%else%}
+                  <a class="nav-link" href="{{ upload }}">Upload Data</a>
+                {% endif %}
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}?">Logout</a>
