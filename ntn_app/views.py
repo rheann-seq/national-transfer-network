@@ -7,6 +7,8 @@ from rest_framework import status
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
 
 from ntn_app.forms import LoginForm, RegistrationForm
 from .models import Course, Profile, University
@@ -25,6 +27,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     print(str(queryset.query))
     serializer_class = CourseSerializer    
 
+@login_required
 def TwoYearUpload(request):
     return render(request,'ntn_app/2year_upload.html')
 
@@ -34,6 +37,11 @@ def FourYearUpload(request):
 
 def add_course(request):
     return render(request, 'ntn_app/add_course.html')
+
+def     logout_view(request):
+    logout(request)
+    return redirect(reverse('login'))
+
 
 def inst_register_view(request):
     context = {}
@@ -77,7 +85,7 @@ def inst_register_view(request):
 
     login(request, new_user)
     
-    return redirect(reverse('upload1'))
+    return redirect(reverse('upload-two-years'))
 
 def login_view(request):
     context = {}

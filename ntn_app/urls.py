@@ -17,7 +17,8 @@ urlpatterns = [
     path('two_year_upload/', views.TwoYearUpload, name='upload-two-years'),
     path('four_year_upload/', views.FourYearUpload, name='upload-four-years'),
     path('add_course', views.add_course, name="add-course"),
-    path('/login_institution', views.login_view, name="login"),
+    path('login_institution', views.login_view, name="login"),
+    path("logout", views.logout_view, name="logout"),
     path('institution_sign_up', views.inst_register_view, name="institution-register"),
     path('', views.entry_page_view, name="entry")
 ]

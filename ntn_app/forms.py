@@ -91,7 +91,7 @@ class RegistrationForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class': "form-control",
-                'placeholder': 'Confirm Password'
+                'placeholder': 'Password'
             }
         )
     )
@@ -103,7 +103,7 @@ class RegistrationForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class': "form-control",
-                'placeholder': 'Password'
+                'placeholder': 'Confirm Password'
             }
         )
     )
