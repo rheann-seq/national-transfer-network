@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Course, University
+from .models import ArticulationAgreement
 
 class UniversitySerializer(serializers.ModelSerializer):
     university_type = serializers.ChoiceField(choices=University.UNIVERSITY_TYPES)
@@ -24,3 +25,9 @@ class UploadDataSerializer(serializers.Serializer):
     credits = serializers.IntegerField()
     twoYearInstitutionName = serializers.CharField(max_length=255)    
     twoYearInstitutionLocation = serializers.CharField(max_length=300)
+
+
+class ArticulationAgreementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ArticulationAgreement
+        fields = '__all__'    

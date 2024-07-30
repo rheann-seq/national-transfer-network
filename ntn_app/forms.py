@@ -2,6 +2,7 @@ from django import forms
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from .models import ArticulationAgreement
 
 
 class RegistrationForm(forms.Form):
@@ -176,3 +177,16 @@ class LoginForm(forms.Form):
 
         # We must return the cleaned data we got from our parent.
         return cleaned_data
+
+
+
+class ArticulationAgreementForm(forms.ModelForm):
+    class Meta:
+        model = ArticulationAgreement
+        fields = [
+            'home_institution_name', 'partner_institution_name', 'program_from_institution_one',
+            'program_at_institution_two', 'associate_degree_program', 'institution_offering_associate_degree',
+            'bachelor_degree_program', 'institution_offering_bachelor_degree', 'degree_program',
+            'field_of_study', 'credit_hours', 'university_name', 'gpa_requirement',
+            'final_degree_program', 'final_institution'
+        ]

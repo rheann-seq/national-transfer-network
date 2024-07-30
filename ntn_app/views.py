@@ -9,10 +9,14 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+from weasyprint import HTML
+from .models import ArticulationAgreement
 
 from ntn_app.forms import LoginForm, RegistrationForm
 from .models import Course, Profile, University
-from .serializers import CourseSerializer, UniversitySerializer, ExcelFileSerializer, UploadDataSerializer
+from .serializers import CourseSerializer, UniversitySerializer, ExcelFileSerializer, UploadDataSerializer, ArticulationAgreementSerializer
 import pandas as pd
 
 def entry_page_view(request):
@@ -224,3 +228,76 @@ class UploadDataView(APIView):
                 return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import ArticulationAgreement
+
+# def agreement_detail(request, pk):
+#     agreement = get_object_or_404(ArticulationAgreement, pk=pk)
+#     if request.method == 'POST':
+#         agreement.home_institution_name = request.POST.get('home_institution_name')
+#         agreement.partner_institution_name = request.POST.get('partner_institution_name')
+#         agreement.program_from_institution_one = request.POST.get('program_from_institution_one')
+#         agreement.program_at_institution_two = request.POST.get('program_at_institution_two')
+#         agreement.associate_degree_program = request.POST.get('associate_degree_program')
+#         agreement.institution_offering_associate_degree = request.POST.get('institution_offering_associate_degree')
+#         agreement.bachelor_degree_program = request.POST.get('bachelor_degree_program')
+#         agreement.institution_offering_bachelor_degree = request.POST.get('institution_offering_bachelor_degree')
+#         agreement.degree_program = request.POST.get('degree_program')
+#         agreement.field_of_study = request.POST.get('field_of_study')
+#         agreement.credit_hours = request.POST.get('credit_hours')
+#         agreement.university_name = request.POST.get('university_name')
+#         agreement.gpa_requirement = request.POST.get('gpa_requirement')
+#         agreement.final_degree_program = request.POST.get('final_degree_program')
+#         agreement.final_institution = request.POST.get('final_institution')
+#         agreement.save()
+#         return redirect('agreement_detail', pk=agreement.pk)
+#     return render(request, 'agreement_detail.html', {'agreement': agreement})
+
+# def agreement_pdf(request, pk):
+#     agreement = ArticulationAgreement.objects.get(pk=pk)
+#     html_string = render_to_string('agreement_detail.html', {'agreement': agreement})
+#     html = HTML(string=html_string)
+#     pdf = html.write_pdf()
+
+#     response = HttpResponse(pdf, content_type='application/pdf')
+#     response['Content-Disposition'] = f'attachment; filename="agreement_{pk}.pdf"'
+#     return response
+
+class AgreementListCreateAPIView(APIView):
+    def get(self, request, format=None):
+        agreements = ArticulationAgreement.objects.all()
+        serializer = ArticulationAgreementSerializer(agreements, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = ArticulationAgreementSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AgreementDetailAPIView(APIView):
+    def get(self, request, pk, format=None):
+        agreement = get_object_or_404(ArticulationAgreement, pk=pk)
+        serializer = ArticulationAgreementSerializer(agreement)
+        return Response(serializer.data)
+
+    def patch(self, request, pk, format=None):
+        agreement = get_object_or_404(ArticulationAgreement, pk=pk)
+        serializer = ArticulationAgreementSerializer(agreement, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AgreementPDFAPIView(APIView):
+    def get(self, request, pk, format=None):
+        agreement = get_object_or_404(ArticulationAgreement, pk=pk)
+        html_string = render_to_string('ntn_app/agreement_detail.html', {'agreement': agreement})
+        html = HTML(string=html_string)
+        pdf = html.write_pdf()
+
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="agreement_{pk}.pdf"'
+        return response
