@@ -188,5 +188,5 @@ class ArticulationAgreementForm(forms.ModelForm):
             'program_at_institution_two', 'associate_degree_program', 'institution_offering_associate_degree',
             'bachelor_degree_program', 'institution_offering_bachelor_degree', 'degree_program',
             'field_of_study', 'credit_hours', 'university_name', 'gpa_requirement',
-            'final_degree_program', 'final_institution'
+            'final_degree_program', 'final_institution','courses'
         ]

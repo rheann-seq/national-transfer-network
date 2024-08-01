@@ -26,6 +26,12 @@ class Course(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
+class AgreementCourse(models.Model):
+    course_name = models.CharField(max_length=255)
+    credits = models.IntegerField()
+    uni_course_name = models.CharField(max_length=255)
+    uni_credits = models.IntegerField()
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name_of_institution = models.CharField(max_length=255, blank=False)
@@ -55,6 +61,6 @@ class ArticulationAgreement(models.Model):
     gpa_requirement = models.FloatField()
     final_degree_program = models.CharField(max_length=255)
     final_institution = models.CharField(max_length=255)
-
+    courses = models.ManyToManyField(AgreementCourse, blank=True)
     def __str__(self):
         return f"{self.home_institution_name} - {self.partner_institution_name}"
