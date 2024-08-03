@@ -7,13 +7,16 @@ from rest_framework import status
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+from weasyprint import HTML
+from .models import AgreementCourse, ArticulationAgreement
 from django.contrib.auth.decorators import login_required
-
-
 from ntn_app.forms import LoginForm, RegistrationForm
 from .models import Course, Profile, University
-from .serializers import CourseSerializer, UniversitySerializer, ExcelFileSerializer, UploadDataSerializer
+from .serializers import CourseSerializer, UniversitySerializer, ExcelFileSerializer, UploadDataSerializer, ArticulationAgreementSerializer, AgreementCourseSerializer
 import pandas as pd
+from rest_framework import generics
 
 def entry_page_view(request):
     return render(request, 'ntn_app/entry_page.html')
@@ -27,6 +30,15 @@ class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     print(str(queryset.query))
     serializer_class = CourseSerializer    
+
+ 
+class AgreementCourseListCreate(generics.ListCreateAPIView):
+    queryset = AgreementCourse.objects.all()
+    serializer_class = AgreementCourseSerializer
+
+class AgreementCourseDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = AgreementCourse.objects.all()
+    serializer_class = AgreementCourseSerializer
 
 @login_required
 def TwoYearUpload(request):
@@ -42,6 +54,9 @@ def add_course(request):
 def logout_view(request):
     logout(request)
     return redirect(reverse('login'))
+
+def agreements(request):
+    return render(request,'ntn_app/agreement_detail.html')
 
 
 def inst_register_view(request):
@@ -231,3 +246,73 @@ class UploadDataView(APIView):
                 return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import ArticulationAgreement
+
+class AgreementListCreateAPIView(APIView):
+    def get(self, request, format=None):
+        agreements = ArticulationAgreement.objects.all()
+        serializer = ArticulationAgreementSerializer(agreements, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = ArticulationAgreementSerializer(data=request.data)
+        print(request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AgreementDetailAPIView(APIView):
+    def get(self, request, pk, format=None):
+        agreement = get_object_or_404(ArticulationAgreement, pk=pk)
+        serializer = ArticulationAgreementSerializer(agreement)
+        return Response(serializer.data)
+
+    def patch(self, request, pk, format=None):
+        agreement = get_object_or_404(ArticulationAgreement, pk=pk)
+        serializer = ArticulationAgreementSerializer(agreement, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AgreementPDFAPIView(APIView):
+    def get(self, request, pk, format=None):
+        agreement = get_object_or_404(ArticulationAgreement, pk=pk)
+        html_string = render_to_string('ntn_app/agreement_detail.html', {'agreement': agreement})
+        html = HTML(string=html_string)
+        pdf = html.write_pdf()
+
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="agreement_{pk}.pdf"'
+        return response
+
+class AgreementPDFAPIView(APIView):
+    def get(self, request, pk, format=None):
+        try:
+            # Fetch the agreement using the primary key
+            agreement = get_object_or_404(ArticulationAgreement, pk=pk)
+            courses = agreement.courses.all()  # Fetch all related courses
+            
+            # Generate the HTML content using a Django template
+            html_string = render_to_string(
+                'ntn_app/agreement-pdf-details.html', 
+                {'agreement': agreement, 'courses': courses}
+            )
+            # Create an HTML object with WeasyPrint
+            html = HTML(string=html_string)
+            
+            # Generate the PDF from the HTML string
+            pdf = html.write_pdf()
+            
+            # Prepare the HTTP response with the correct content-type
+            response = HttpResponse(pdf, content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="agreement_{pk}.pdf"'
+            
+            return response
+        except Exception as e:
+            # Log the error or print it
+            print(f"Error generating PDF: {str(e)}")
+            return HttpResponse("Error generating PDF", status=500)

@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Course, University
+from .models import AgreementCourse, Course, University
+from .models import ArticulationAgreement
 
 class UniversitySerializer(serializers.ModelSerializer):
     university_type = serializers.ChoiceField(choices=University.UNIVERSITY_TYPES)
@@ -11,6 +12,11 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = '__all__'       
+
+class AgreementCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AgreementCourse
+        fields = '__all__'      
 
 class ExcelFileSerializer(serializers.Serializer):
     file = serializers.FileField()         
@@ -24,3 +30,9 @@ class UploadDataSerializer(serializers.Serializer):
     credits = serializers.IntegerField()
     twoYearInstitutionName = serializers.CharField(max_length=255)    
     twoYearInstitutionLocation = serializers.CharField(max_length=300)
+
+
+class ArticulationAgreementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ArticulationAgreement
+        fields = '__all__'    

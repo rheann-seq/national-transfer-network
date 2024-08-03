@@ -26,6 +26,12 @@ class Course(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
+class AgreementCourse(models.Model):
+    course_name = models.CharField(max_length=255)
+    credits = models.IntegerField()
+    uni_course_name = models.CharField(max_length=255)
+    uni_credits = models.IntegerField()
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name_of_institution = models.CharField(max_length=255, blank=False)
@@ -37,3 +43,24 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+from django.db import models
+
+class ArticulationAgreement(models.Model):
+    home_institution_name = models.CharField(max_length=255)
+    partner_institution_name = models.CharField(max_length=255)
+    program_from_institution_one = models.CharField(max_length=255)
+    program_at_institution_two = models.CharField(max_length=255)
+    associate_degree_program = models.CharField(max_length=255)
+    institution_offering_associate_degree = models.CharField(max_length=255)
+    bachelor_degree_program = models.CharField(max_length=255)
+    institution_offering_bachelor_degree = models.CharField(max_length=255)
+    degree_program = models.CharField(max_length=255)
+    field_of_study = models.CharField(max_length=255)
+    credit_hours = models.IntegerField()
+    university_name = models.CharField(max_length=255)
+    gpa_requirement = models.FloatField()
+    final_degree_program = models.CharField(max_length=255)
+    final_institution = models.CharField(max_length=255)
+    courses = models.ManyToManyField(AgreementCourse, blank=True)
+    def __str__(self):
+        return f"{self.home_institution_name} - {self.partner_institution_name}"

@@ -20,5 +20,20 @@
    • Then install Django
    python3 -m pip install django
 5. python3 -m pip install djangorestframework
+   python3 -m pip install weasyprint
 6. python3 manage.py migrate
    python3 manage.py runserver
+   python -m pip install pandas
+
+Follow these steps for weasyprint: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html
+
+Windows:
+Install MSYS2 keeping the default options.
+
+After installation, in MSYS2’s shell, execute pacman -S mingw-w64-x86_64-pango.
+
+Close MSYS2’s shell.
+python -m pip install weasyprint
+
+for issues with gobject:
+https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases
