@@ -17,6 +17,7 @@ import pandas as pd
 
 def entry_page_view(request):
     return render(request, 'ntn_app/entry_page.html')
+
 class UniversityViewSet(viewsets.ModelViewSet):
     queryset =  University.objects.all()
     print(str(queryset.query))
@@ -38,12 +39,15 @@ def FourYearUpload(request):
 def add_course(request):
     return render(request, 'ntn_app/add_course.html')
 
-def     logout_view(request):
+def logout_view(request):
     logout(request)
     return redirect(reverse('login'))
 
 
 def inst_register_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+        
     context = {}
 
     if request.method == "GET":
@@ -88,6 +92,9 @@ def inst_register_view(request):
     return redirect(reverse('upload-two-years'))
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('upload-two-years'))
+
     context = {}
 
     # Just display the registration form if this is a GET request.
